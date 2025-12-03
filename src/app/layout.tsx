@@ -4,9 +4,9 @@ import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'List Building for Agencies | Self-Served Lead Research',
+  title: 'SalesDuo | List building made easy',
   description:
-    'Build perfect lead lists without the research grind. Upload a video walkthrough, get a quote with samples, and receive your complete dataset within 48 hours.',
+    'List building made easy with SalesDuo. Custom lead lists built to your exact specifications. Define your requirements, get a quote, receive your data.',
   keywords: [
     'lead generation',
     'list building',
@@ -30,16 +30,16 @@ export const metadata: Metadata = {
   },
   manifest: '/favicon/site.webmanifest',
   openGraph: {
-    title: 'List Building for Agencies | Self-Served Lead Research',
+    title: 'SalesDuo | List building made easy',
     description:
-      'Build perfect lead lists without the research grind. 48-hour delivery, 100% self-served.',
+      'Custom lead lists built to your exact specifications. 100% self-served list building.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'List Building for Agencies | Self-Served Lead Research',
+    title: 'SalesDuo | List building made easy',
     description:
-      'Build perfect lead lists without the research grind. 48-hour delivery, 100% self-served.',
+      'Custom lead lists built to your exact specifications. 100% self-served list building.',
   },
 };
 

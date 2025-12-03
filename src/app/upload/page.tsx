@@ -3,9 +3,9 @@ import { Navbar } from "@/components/navbar";
 import { UploadForm } from "@/components/upload-form";
 
 export const metadata: Metadata = {
-  title: "Get Your Quote | List Building for Agencies",
+  title: "SalesDuo | Get Your Quote",
   description:
-    "Share your list building process and our AI agent will analyze your requirements to deliver a detailed quote with sample leads within 2 hours.",
+    "Get a custom quote for your list building project. Share your requirements and receive detailed pricing with sample leads.",
 };
 
 export default function UploadPage() {
