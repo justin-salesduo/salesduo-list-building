@@ -26,6 +26,14 @@ export interface ScenarioContent {
 }
 
 /**
+ * Final CTA section content configuration
+ */
+export interface CTAContent {
+  headline: string;
+  subheadline: string;
+}
+
+/**
  * Complete role-based content configuration
  */
 export interface RoleContent {
@@ -33,6 +41,7 @@ export interface RoleContent {
   hero: HeroContent;
   pricing: PricingContent;
   scenarios: ScenarioContent;
+  cta: CTAContent;
 }
 
 /**
@@ -68,29 +77,37 @@ export const roleContentMap: Record<UserRole, RoleContent> = {
       ],
       sampleOutput: ["clay-users", "expansion-news", "series-a-saas"],
     },
+    cta: {
+      headline: "Ready to Build Your Perfect Lead List?",
+      subheadline: "No sales calls. Done in minutes.",
+    },
   },
 
-  "Recruitment Agency": {
-    role: "Recruitment Agency",
+  "Recruitment Firm": {
+    role: "Recruitment Firm",
     hero: {
-      headline: "Find perfect candidates faster with AI-powered sourcing",
+      headline: "Find companies with active job openings, automatically",
       subheadline:
-        "Stop endless resume screening. Share your candidate criteria, get enriched prospect lists with verified contact details within 24-48 hours.",
+        "Stop manual job board scraping. Get targeted lists of companies actively hiring, complete with role details and hiring manager contacts within 24-48 hours.",
       painPoints: [
-        "Manual Resume Parsing",
-        "Limited Candidate Reach",
-        "Outdated Contact Information",
-        "Time-to-Fill Pressure",
-        "Expensive Sourcing Tools",
+        "Manual Job Board Scraping",
+        "Missing New Hiring Opportunities",
+        "Outdated Company Hiring Data",
+        "Time-Consuming Role Research",
+        "Hard-to-Find Hiring Manager Contacts",
       ],
     },
     pricing: {
-      emphasis: "Cost per candidate profile",
+      emphasis: "Cost per active job opening",
       recommendedTier: 100000,
     },
     scenarios: {
       costBreakdown: ["series-a-saas-5000"],
       sampleOutput: ["employee-engagement", "series-a-saas"],
+    },
+    cta: {
+      headline: "Ready to Find Companies Actively Hiring?",
+      subheadline: "No sales calls. Done in minutes.",
     },
   },
 
@@ -115,6 +132,10 @@ export const roleContentMap: Record<UserRole, RoleContent> = {
     scenarios: {
       costBreakdown: ["expansion-news-2000", "series-a-saas-5000"],
       sampleOutput: ["expansion-news", "series-a-saas", "ecommerce-growth"],
+    },
+    cta: {
+      headline: "Ready to Build Your Hyper-Targeted Account Lists?",
+      subheadline: "No sales calls. Done in minutes.",
     },
   },
 };
@@ -159,4 +180,11 @@ export function getPricingContent(role: UserRole | null): PricingContent {
  */
 export function getScenarioContent(role: UserRole | null): ScenarioContent {
   return getRoleContent(role).scenarios;
+}
+
+/**
+ * Get role-specific CTA content
+ */
+export function getCTAContent(role: UserRole | null): CTAContent {
+  return getRoleContent(role).cta;
 }

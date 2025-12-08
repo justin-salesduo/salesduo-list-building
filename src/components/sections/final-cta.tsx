@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useUserRole } from "@/hooks/use-user-role";
+import { getCTAContent } from "@/config/role-content";
 import type { CTAVariant } from "./hero";
 
 interface FinalCTAProps {
@@ -10,6 +12,8 @@ interface FinalCTAProps {
 }
 
 export function FinalCTA({ ctaVariant = "quote", onCTAClick }: FinalCTAProps) {
+  const { selectedRole } = useUserRole();
+  const ctaContent = getCTAContent(selectedRole);
   const ctaText = "Start Free";
 
   return (
@@ -17,10 +21,10 @@ export function FinalCTA({ ctaVariant = "quote", onCTAClick }: FinalCTAProps) {
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center p-12 bg-surface border border-border rounded-lg">
           <h2 className="text-text-primary font-bold mb-4">
-            Ready to Build Your Perfect Lead List?
+            {ctaContent.headline}
           </h2>
           <p className="text-xl text-text-secondary mb-8 max-w-xl mx-auto">
-            No sales calls. Done in minutes.
+            {ctaContent.subheadline}
           </p>
 
           <div className="flex items-center justify-center">

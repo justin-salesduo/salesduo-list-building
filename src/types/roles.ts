@@ -6,7 +6,7 @@ import { Building2, UserSearch, MessageCircleHeart } from "lucide-react";
  */
 export type UserRole =
   | "Lead Generation Agency"
-  | "Recruitment Agency"
+  | "Recruitment Firm"
   | "B2B Marketing Leader";
 
 /**
@@ -33,13 +33,13 @@ export const roleOptions: RoleOption[] = [
     icon: Building2,
   },
   {
-    role: "Recruitment Agency",
-    description: "Build candidate lists efficiently",
+    role: "Recruitment Firm",
+    description: "Find companies with active job openings automatically",
     icon: UserSearch,
   },
   {
     role: "B2B Marketing Leader",
-    description: "Build campaigns faster with quality target lists",
+    description: "Build hyper-targeted lead lists for ABM campaigns",
     icon: MessageCircleHeart,
   },
 ];

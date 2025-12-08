@@ -24,7 +24,7 @@ export function Hero({ ctaVariant = "quote", onCTAClick }: HeroProps) {
       <div className="container-custom flex-1 flex flex-col justify-center">
         <div className="max-w-4xl mx-auto text-center">
           {/* Headline */}
-          <h1 className="mb-8 text-8xl md:text-9xl text-text-primary font-bold text-balance leading-tight">
+          <h1 className="mb-6 text-8xl md:text-9xl text-text-primary font-bold text-balance leading-[0.95]">
             {heroContent.headline}
           </h1>
 

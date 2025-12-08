@@ -90,7 +90,7 @@ export function ThreeSteps() {
               <p className="text-sm text-text-muted leading-relaxed">
                 We handle complex AI-powered analysis including document/video
                 analysis, multi-hop reasoning, competitive intelligence, and
-                custom business logic—questions traditional data providers can't
+                custom business logic questions traditional data providers can't
                 answer.
               </p>
             </div>

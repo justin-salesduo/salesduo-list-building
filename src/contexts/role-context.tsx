@@ -33,9 +33,17 @@ export function RoleProvider({ children }: RoleProviderProps) {
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
   const [showRoleModal, setShowRoleModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Mark as mounted on client side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Load role from localStorage on mount
   useEffect(() => {
+    if (!isMounted) return;
+
     try {
       const savedRole = localStorage.getItem(ROLE_STORAGE_KEY);
 
@@ -43,7 +51,7 @@ export function RoleProvider({ children }: RoleProviderProps) {
         // Validate that saved role is still a valid UserRole
         const validRoles: UserRole[] = [
           "Lead Generation Agency",
-          "Recruitment Agency",
+          "Recruitment Firm",
           "B2B Marketing Leader",
         ];
 
@@ -65,7 +73,7 @@ export function RoleProvider({ children }: RoleProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [isMounted]);
 
   /**
    * Update the selected role and persist to localStorage
