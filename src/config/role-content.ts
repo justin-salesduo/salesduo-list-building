@@ -45,13 +45,13 @@ export const roleContentMap: Record<UserRole, RoleContent> = {
   "Lead Generation Agency": {
     role: "Lead Generation Agency",
     hero: {
-      headline: "Build high-quality lead lists for your clients in hours, not days",
+      headline: "List building made easy",
       subheadline:
         "Stop manual prospecting. Film a quick video of your requirements, get a quote with sample data, and receive complete datasets within 24-48 hours.",
       painPoints: [
-        "Manual LinkedIn Scraping",
-        "Inconsistent Data Quality",
-        "Client Churn from Bad Data",
+        "Manual Data Sourcing",
+        "Data Cleaning",
+        "Endless Clay Columns",
         "Time-Consuming Research",
         "Costly Data Tool Subscriptions",
       ],
@@ -61,7 +61,11 @@ export const roleContentMap: Record<UserRole, RoleContent> = {
       recommendedTier: 150000,
     },
     scenarios: {
-      costBreakdown: ["clay-users-500", "expansion-news-2000", "series-a-saas-5000"],
+      costBreakdown: [
+        "clay-users-500",
+        "expansion-news-2000",
+        "series-a-saas-5000",
+      ],
       sampleOutput: ["clay-users", "expansion-news", "series-a-saas"],
     },
   },
