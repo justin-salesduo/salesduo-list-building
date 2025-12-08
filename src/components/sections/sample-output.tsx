@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FileSpreadsheet, Webhook, Sheet, FileJson } from "lucide-react";
+import { useUserRole } from "@/hooks/use-user-role";
+import { getScenarioContent } from "@/config/role-content";
 
 const scenarios = [
   {
@@ -269,7 +271,17 @@ const formats = [
 ];
 
 export function SampleOutput() {
-  const [activeScenario, setActiveScenario] = useState(scenarios[0]);
+  const { selectedRole } = useUserRole();
+  const scenarioContent = getScenarioContent(selectedRole);
+
+  // Filter scenarios based on role
+  const filteredScenarios = useMemo(() => {
+    return scenarios.filter(scenario =>
+      scenarioContent.sampleOutput.includes(scenario.id)
+    );
+  }, [scenarioContent]);
+
+  const [activeScenario, setActiveScenario] = useState(filteredScenarios[0] || scenarios[0]);
 
   return (
     <section className="section-padding bg-surface" id="examples">
@@ -305,7 +317,7 @@ export function SampleOutput() {
             {/* Left Tabs */}
             <div className="lg:col-span-3">
               <div className="space-y-2">
-                {scenarios.map((scenario) => (
+                {filteredScenarios.map((scenario) => (
                   <button
                     key={scenario.id}
                     onClick={() => setActiveScenario(scenario)}

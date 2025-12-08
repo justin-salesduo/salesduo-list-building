@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useUserRole } from "@/hooks/use-user-role";
+import { getScenarioContent } from "@/config/role-content";
 
 type PricingType = "free" | "per-run" | "only-if-found";
 
@@ -119,7 +121,17 @@ type Props = {
 };
 
 export function CostBreakdown({ perCredit }: Props) {
-  const [activeScenario, setActiveScenario] = useState(costScenarios[0]);
+  const { selectedRole } = useUserRole();
+  const scenarioContent = getScenarioContent(selectedRole);
+
+  // Filter scenarios based on role
+  const filteredScenarios = useMemo(() => {
+    return costScenarios.filter(scenario =>
+      scenarioContent.costBreakdown.includes(scenario.id)
+    );
+  }, [scenarioContent]);
+
+  const [activeScenario, setActiveScenario] = useState(filteredScenarios[0] || costScenarios[0]);
 
   // Calculate total credits for the scenario
   const calculateTotalCredits = (scenario: CostScenario) => {
@@ -190,7 +202,7 @@ export function CostBreakdown({ perCredit }: Props) {
 
         {/* Scenario Tabs */}
         <div className="flex justify-center gap-2 mb-8 flex-wrap">
-          {costScenarios.map((scenario) => (
+          {filteredScenarios.map((scenario) => (
             <button
               key={scenario.id}
               onClick={() => setActiveScenario(scenario)}

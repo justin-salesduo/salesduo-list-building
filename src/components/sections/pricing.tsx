@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Sparkles, TrendingUp, Zap } from "lucide-react";
+import { useUserRole } from "@/hooks/use-user-role";
+import { getPricingContent } from "@/config/role-content";
 import { CostBreakdown } from "./cost-breakdown";
 
 // Credit bundle pricing - base prices
@@ -99,7 +101,10 @@ const leadTiers = [
 ];
 
 export function Pricing() {
-  const [selectedCredits, setSelectedCredits] = useState(150000);
+  const { selectedRole } = useUserRole();
+  const pricingContent = getPricingContent(selectedRole);
+
+  const [selectedCredits, setSelectedCredits] = useState(pricingContent.recommendedTier);
   const [isLifetime, setIsLifetime] = useState(false);
   const { price, perCredit } = calculatePrice(selectedCredits, isLifetime);
   const expiryMonths = calculateExpiry(selectedCredits);
@@ -122,7 +127,7 @@ export function Pricing() {
               Credit-Based Pricing
             </h2>
             <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Flexible Pay What You Need.
+              Flexible Pay What You Need. {pricingContent.emphasis}.
             </p>
           </div>
 
@@ -197,9 +202,9 @@ export function Pricing() {
                             : "border-border bg-background hover:border-accent"
                         }`}
                       >
-                        {bundle.popular && (
+                        {bundle.credits === pricingContent.recommendedTier && (
                           <span className="absolute -top-2 right-2 inline-flex items-center px-2 py-0.5 bg-accent text-white text-[10px] font-semibold rounded-full uppercase">
-                            Popular
+                            Recommended
                           </span>
                         )}
                         <div className="flex items-baseline justify-between mb-1">

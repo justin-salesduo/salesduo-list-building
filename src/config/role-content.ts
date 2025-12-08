@@ -85,7 +85,7 @@ export const roleContentMap: Record<UserRole, RoleContent> = {
       recommendedTier: 100000,
     },
     scenarios: {
-      costBreakdown: ["employee-engagement-2000", "series-a-saas-5000"],
+      costBreakdown: ["series-a-saas-5000"],
       sampleOutput: ["employee-engagement", "series-a-saas"],
     },
   },
