@@ -1,6 +1,6 @@
 "use client";
 
-import { Video, FileText, CheckCircle } from "lucide-react";
+import { Video, FileText, CheckCircle, Sparkles, Database } from "lucide-react";
 
 const steps = [
   {
@@ -35,7 +35,7 @@ export function ThreeSteps() {
             Three Simple Steps to Your Perfect List
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            No sales calls. No back-and-forth emails. Just results.
+            No sales calls. Fully self-served. Just results.
           </p>
         </div>
 
@@ -74,6 +74,42 @@ export function ThreeSteps() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Advanced Capabilities Note */}
+        <div className="mt-24">
+          <div className="flex flex-col md:flex-row gap-16 text-center md:text-left justify-center">
+            {/* Advanced AI Operations */}
+            <div className="flex-1">
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+                <Sparkles className="w-5 h-5 text-text-muted flex-shrink-0" />
+                <h3 className="font-medium text-text-secondary text-base">
+                  Advanced AI Operations
+                </h3>
+              </div>
+              <p className="text-sm text-text-muted leading-relaxed">
+                We handle complex AI-powered analysis including document/video
+                analysis, multi-hop reasoning, competitive intelligence, and
+                custom business logic—questions traditional data providers can't
+                answer.
+              </p>
+            </div>
+
+            {/* Custom Data Sources */}
+            <div className="flex-1">
+              <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+                <Database className="w-5 h-5 text-text-muted flex-shrink-0" />
+                <h3 className="font-medium text-text-secondary text-base">
+                  Custom Data Sources
+                </h3>
+              </div>
+              <p className="text-sm text-text-muted leading-relaxed">
+                Need data from specialized databases or proprietary sources? We
+                build custom integrations for your unique requirements. If the
+                data exists, we'll find a way to get it.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -31,16 +31,16 @@ export function Footer() {
               Why SalesDuo
             </a>
             <a
-              href="#examples"
-              className="text-xs text-text-secondary hover:text-text-primary transition-colors"
-            >
-              Examples
-            </a>
-            <a
               href="#pricing"
               className="text-xs text-text-secondary hover:text-text-primary transition-colors"
             >
               Pricing
+            </a>
+            <a
+              href="#examples"
+              className="text-xs text-text-secondary hover:text-text-primary transition-colors"
+            >
+              Examples
             </a>
           </nav>
 

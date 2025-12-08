@@ -9,7 +9,7 @@ import { ThreeSteps } from '@/components/sections/three-steps';
 import { SampleOutput } from '@/components/sections/sample-output';
 import { Pricing } from '@/components/sections/pricing';
 import { FinalCTA } from '@/components/sections/final-cta';
-import { Footer } from '@/components/sections/footer';
+import { Footer } from '@/components/footer';
 
 export default function LandingPage() {
   const router = useRouter();

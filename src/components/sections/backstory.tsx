@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Zap } from "lucide-react";
+import { WorkflowExamples } from "./workflows-example";
 
 export function Backstory() {
   return (
@@ -39,6 +40,9 @@ export function Backstory() {
             </p>
           </div>
         </div>
+
+        {/* Workflow Examples */}
+        <WorkflowExamples />
 
         {/* The Problem - Narrative Story */}
         <div className="max-w-4xl mx-auto mb-16">

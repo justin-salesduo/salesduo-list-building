@@ -1,78 +1,108 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Sparkles, TrendingUp, Zap } from 'lucide-react';
+import { useState } from "react";
+import { Sparkles, TrendingUp, Zap } from "lucide-react";
+import { CostBreakdown } from "./cost-breakdown";
 
-// Credit bundle pricing
+// Credit bundle pricing - base prices
 const bundles = [
-  { credits: 1000, price: 300, perCredit: 0.30, discount: '0%' },
-  { credits: 5000, price: 1000, perCredit: 0.20, discount: '33%' },
-  { credits: 10000, price: 1500, perCredit: 0.15, discount: '50%' },
-  { credits: 25000, price: 3000, perCredit: 0.12, discount: '60%', popular: true },
-  { credits: 50000, price: 5000, perCredit: 0.10, discount: '67%' },
-  { credits: 100000, price: 8000, perCredit: 0.08, discount: '73%' },
-  { credits: 250000, price: 15000, perCredit: 0.06, discount: '80%' },
+  { credits: 10000, price: 300, perCredit: 0.03, expiry: 1 },
+  { credits: 40000, price: 1000, perCredit: 0.025, expiry: 2 },
+  { credits: 70000, price: 1500, perCredit: 0.0214, expiry: 3 },
+  { credits: 150000, price: 3000, perCredit: 0.02, expiry: 6, popular: true },
+  { credits: 300000, price: 5000, perCredit: 0.0167, expiry: 6 },
+  { credits: 500000, price: 8000, perCredit: 0.016, expiry: 8 },
+  { credits: 1000000, price: 14000, perCredit: 0.014, expiry: 12 },
 ];
 
 // Calculate price based on credits
-function calculatePrice(credits: number): { price: number; perCredit: number } {
-  if (credits >= 250000) return { price: credits * 0.06, perCredit: 0.06 };
-  if (credits >= 100000) return { price: credits * 0.08, perCredit: 0.08 };
-  if (credits >= 50000) return { price: credits * 0.10, perCredit: 0.10 };
-  if (credits >= 25000) return { price: credits * 0.12, perCredit: 0.12 };
-  if (credits >= 10000) return { price: credits * 0.15, perCredit: 0.15 };
-  if (credits >= 5000) return { price: credits * 0.20, perCredit: 0.20 };
-  return { price: credits * 0.30, perCredit: 0.30 };
+function calculatePrice(
+  credits: number,
+  isLifetime: boolean = false,
+): { price: number; perCredit: number } {
+  let basePrice = 0;
+  let basePerCredit = 0;
+
+  if (credits >= 1000000) {
+    basePrice = credits * 0.014;
+    basePerCredit = 0.014;
+  } else if (credits >= 500000) {
+    basePrice = credits * 0.016;
+    basePerCredit = 0.016;
+  } else if (credits >= 300000) {
+    basePrice = credits * 0.0167;
+    basePerCredit = 0.0167;
+  } else if (credits >= 150000) {
+    basePrice = credits * 0.02;
+    basePerCredit = 0.02;
+  } else if (credits >= 70000) {
+    basePrice = credits * 0.0214;
+    basePerCredit = 0.0214;
+  } else if (credits >= 40000) {
+    basePrice = credits * 0.025;
+    basePerCredit = 0.025;
+  } else {
+    basePrice = credits * 0.03;
+    basePerCredit = 0.03;
+  }
+
+  // Apply 15% premium for lifetime
+  if (isLifetime) {
+    basePrice = basePrice * 1.15;
+    basePerCredit = basePerCredit * 1.15;
+  }
+
+  return { price: Math.round(basePrice), perCredit: basePerCredit };
 }
 
 // Calculate expiry based on credit amount
-function calculateExpiry(credits: number, price: number): number {
-  if (credits >= 250000) return 12;
-  if (credits >= 100000) return 12;
-  if (credits >= 50000) return 9;
-  if (credits >= 25000) return 6;
-  if (credits >= 10000) return 3;
-  if (credits >= 5000) return 2;
-  return 1; // 1K credits
+function calculateExpiry(credits: number): number {
+  if (credits >= 1000000) return 12;
+  if (credits >= 500000) return 8;
+  if (credits >= 150000) return 6;
+  if (credits >= 70000) return 3;
+  if (credits >= 40000) return 2;
+  return 1;
 }
 
 const leadTiers = [
   {
-    name: 'Basic Lead',
-    credits: '1',
+    name: "Basic Lead",
+    credits: "1",
     icon: Sparkles,
-    dataPoints: ['Name, email', 'Company', 'LinkedIn profile', 'Job title'],
+    dataPoints: ["Name, email", "Company", "LinkedIn profile", "Job title"],
   },
   {
-    name: 'Standard Lead',
-    credits: '2-4',
+    name: "Standard Lead",
+    credits: "2-4",
     icon: TrendingUp,
     dataPoints: [
-      'Everything in Basic',
-      'Company size, industry, location',
-      'Verified phone number',
-      'Tech stack data',
+      "Everything in Basic",
+      "Company size, industry, location",
+      "Verified phone number",
+      "Tech stack data",
     ],
     popular: true,
   },
   {
-    name: 'Advanced Lead',
-    credits: '4+',
+    name: "Advanced Lead",
+    credits: "4+",
     icon: Zap,
     dataPoints: [
-      'Everything in Standard',
-      'Custom data points (10+ fields)',
-      'Recent activity signals',
-      'Intent data',
-      'Multi-source verification',
+      "Everything in Standard",
+      "Custom data points (10+ fields)",
+      "Recent activity signals",
+      "Intent data",
+      "Multi-source verification",
     ],
   },
 ];
 
 export function Pricing() {
-  const [selectedCredits, setSelectedCredits] = useState(25000);
-  const { price, perCredit } = calculatePrice(selectedCredits);
-  const expiryMonths = calculateExpiry(selectedCredits, price);
+  const [selectedCredits, setSelectedCredits] = useState(150000);
+  const [isLifetime, setIsLifetime] = useState(false);
+  const { price, perCredit } = calculatePrice(selectedCredits, isLifetime);
+  const expiryMonths = calculateExpiry(selectedCredits);
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedCredits(Number(e.target.value));
@@ -83,107 +113,106 @@ export function Pricing() {
   };
 
   return (
-    <section className="section-padding bg-background" id="pricing">
-      <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-text-primary font-bold mb-4">
-            Credit-Based Pricing
-          </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Flexible Pay As You Go. Up to 12 months credit expiry.
-          </p>
+    <>
+      <section className="py-12 bg-background" id="pricing">
+        <div className="container-custom">
+          {/* Section Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-text-primary mb-3">
+              Credit-Based Pricing
+            </h2>
+            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+              Flexible Pay What You Need.
+            </p>
+          </div>
+
+        {/* Lifetime Toggle */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex items-center gap-2 p-1 bg-surface border border-border rounded-lg">
+            <button
+              onClick={() => setIsLifetime(false)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                !isLifetime
+                  ? "bg-accent text-white shadow-sm"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <span>Regular</span>
+                <span
+                  className={`text-[10px] mt-0.5 ${!isLifetime ? "text-white/80" : "text-text-muted"}`}
+                >
+                  Credits expire 1-12 months
+                </span>
+              </div>
+            </button>
+            <button
+              onClick={() => setIsLifetime(true)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                isLifetime
+                  ? "bg-accent text-white shadow-sm"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <span>Lifetime</span>
+                <span
+                  className={`text-[10px] mt-0.5 ${isLifetime ? "text-white/80" : "text-text-muted"}`}
+                >
+                  Credits never expire (+15%)
+                </span>
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Interactive Credit Selector with Bundles */}
-        <div className="max-w-6xl mx-auto mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Calculator - Left Side (2 columns) */}
-            <div className="lg:col-span-2">
-              <div className="p-8 bg-surface border border-border rounded-lg h-full">
-                <div className="mb-8">
-                  <h3 className="text-center text-base font-semibold text-text-primary mb-6">
-                    Select Credits
-                  </h3>
-
-                  {/* Slider */}
-                  <input
-                    type="range"
-                    min="1000"
-                    max="250000"
-                    step="1000"
-                    value={selectedCredits}
-                    onChange={handleSliderChange}
-                    className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-accent"
-                  />
-
-                  {/* Credit Amount Display */}
-                  <div className="text-center mt-8">
-                    <div className="text-5xl font-bold text-text-primary mb-2">
-                      {selectedCredits.toLocaleString()} credits
-                    </div>
-                    <div className="text-3xl font-semibold text-accent mb-4">
-                      ${price.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-text-muted">
-                      ${perCredit.toFixed(2)} per credit • Valid {expiryMonths} month{expiryMonths === 1 ? '' : 's'}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Buy Button */}
-                <button
-                  className="w-full py-4 px-8 bg-cta text-white rounded-lg font-semibold text-lg hover:bg-cta-hover transition-colors shadow-sm hover:shadow-md"
-                  onClick={() => {
-                    window.location.href = '/upload';
-                  }}
-                >
-                  Buy {selectedCredits.toLocaleString()} Credits
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Select Bundles - Right Side (1 column) */}
-            <div className="lg:col-span-1">
-              <div className="p-6 bg-surface border border-border rounded-lg h-full flex flex-col">
-                <h3 className="text-center text-base font-semibold text-text-primary mb-4">
-                  Popular Bundles
+        <div className="max-w-6xl mx-auto mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Quick Select Bundles - Left Side */}
+            <div>
+              <div className="p-4 bg-surface border border-border rounded-lg h-full">
+                <h3 className="text-center text-sm font-semibold text-text-primary mb-3">
+                  Popular Packages
                 </h3>
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   {bundles.map((bundle) => {
-                    const bundleExpiry = calculateExpiry(bundle.credits, bundle.price);
+                    const displayPrice = isLifetime
+                      ? Math.round(bundle.price * 1.15)
+                      : bundle.price;
+                    const displayPerCredit = isLifetime
+                      ? (bundle.perCredit * 1.15).toFixed(4)
+                      : bundle.perCredit.toFixed(4);
+                    const expiryText = isLifetime
+                      ? "Never expires"
+                      : `Expire in ${bundle.expiry}mo`;
+
                     return (
                       <button
                         key={bundle.credits}
                         onClick={() => handleBundleClick(bundle.credits)}
-                        className={`w-full p-3 rounded-lg border-2 transition-all hover:scale-105 relative ${
+                        className={`p-3 rounded-lg border-2 transition-all hover:scale-[1.02] relative ${
                           selectedCredits === bundle.credits
-                            ? 'border-accent bg-background shadow-md'
-                            : 'border-border bg-background hover:border-accent'
+                            ? "border-accent bg-background shadow-md"
+                            : "border-border bg-background hover:border-accent"
                         }`}
                       >
                         {bundle.popular && (
-                          <span className="absolute -top-2 right-3 inline-flex items-center px-2 py-0.5 bg-accent text-white text-xs font-semibold rounded-full uppercase">
-                            Most Popular
+                          <span className="absolute -top-2 right-2 inline-flex items-center px-2 py-0.5 bg-accent text-white text-[10px] font-semibold rounded-full uppercase">
+                            Popular
                           </span>
                         )}
                         <div className="flex items-baseline justify-between mb-1">
-                          <div className="text-xl font-bold text-text-primary">
+                          <div className="text-lg font-bold text-text-primary">
                             {bundle.credits.toLocaleString()}
                           </div>
                           <div className="text-base font-semibold text-text-primary">
-                            ${bundle.price}
+                            ${displayPrice.toLocaleString()}
                           </div>
                         </div>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-text-muted">
-                            Valid {bundleExpiry} month{bundleExpiry === 1 ? '' : 's'}
-                          </span>
-                          {bundle.discount && (
-                            <span className="text-accent font-medium">
-                              Save {bundle.discount}
-                            </span>
-                          )}
+                        <div className="flex items-center justify-between text-xs text-text-muted">
+                          <span>{expiryText}</span>
+                          <span>${displayPerCredit}/cr</span>
                         </div>
                       </button>
                     );
@@ -191,100 +220,71 @@ export function Pricing() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Credits-Per-Lead Tiers */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-semibold text-text-primary mb-4">
-              How Credits Work
-            </h3>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Credits per lead varies based on data complexity. Our AI agent analyzes
-              your requirements to provide an exact quote.
-            </p>
-          </div>
+            {/* Calculator - Right Side */}
+            <div>
+              <div className="p-4 bg-surface border border-border rounded-lg h-full flex flex-col">
+                <h3 className="text-center text-sm font-semibold text-text-primary mb-3">
+                  Pay As You Go
+                </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {leadTiers.map((tier) => {
-              // Calculate leads based on tier credits
-              let estimatedLeads = 0;
-              let creditsPerLead = 1;
-              if (tier.credits === '1') {
-                estimatedLeads = selectedCredits;
-                creditsPerLead = 1;
-              } else if (tier.credits === '2-4') {
-                estimatedLeads = Math.floor(selectedCredits / 3);
-                creditsPerLead = 3;
-              } else if (tier.credits === '4+') {
-                estimatedLeads = Math.floor(selectedCredits / 5);
-                creditsPerLead = 5;
-              }
-
-              // Calculate cost per lead
-              const costPerLead = perCredit * creditsPerLead;
-
-              return (
-                <div
-                  key={tier.name}
-                  className={`p-6 rounded-lg border-2 relative ${
-                    tier.popular
-                      ? 'border-accent bg-surface shadow-md'
-                      : 'border-border bg-background'
-                  }`}
-                >
-                  {tier.popular && (
-                    <span className="absolute -top-3 right-4 inline-flex items-center gap-1 px-3 py-1 bg-accent text-white text-xs font-semibold rounded-full uppercase">
-                      Most Common
-                    </span>
-                  )}
-
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 flex items-center justify-center bg-background border border-border rounded-lg">
-                      <tier.icon className="w-6 h-6 text-text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-text-primary">
-                        {tier.name}
-                      </h4>
-                      <div className="text-sm text-accent font-medium">
-                        {tier.credits} {tier.credits === '1' ? 'credit' : 'credits'}
+                {/* Centered Slider Section */}
+                <div className="flex-1 flex flex-col justify-center py-8">
+                  {/* Credit Amount Display Above Slider */}
+                  <div className="text-center mb-6">
+                    <div className="flex items-baseline justify-center gap-2">
+                      <div className="text-5xl font-bold text-text-primary">
+                        {selectedCredits.toLocaleString()}
                       </div>
+                      <div className="text-sm text-text-muted">credits</div>
                     </div>
                   </div>
 
-                  <div className="mb-4 p-3 bg-background rounded-lg border border-border">
-                    <div className="text-sm text-text-secondary">
-                      {selectedCredits.toLocaleString()} Credits ~ <span className="font-semibold text-text-primary">{estimatedLeads.toLocaleString()} leads</span>
+                  {/* Slider */}
+                  <input
+                    type="range"
+                    min="10000"
+                    max="1000000"
+                    step="10000"
+                    value={selectedCredits}
+                    onChange={handleSliderChange}
+                    className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-accent mb-8"
+                  />
+
+                  {/* Pricing Details */}
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-accent mb-3">
+                      ${price.toLocaleString()}
                     </div>
-                    <div className="text-xs text-text-muted mt-1">
-                      ~${costPerLead.toFixed(2)} per lead
+                    <div className="text-sm text-text-muted mb-3">
+                      ${perCredit.toFixed(4)} per credit
+                    </div>
+                    <div className="text-base text-text-secondary font-medium">
+                      {isLifetime
+                        ? "Credits never expire"
+                        : `Credits expire in ${expiryMonths} month${expiryMonths === 1 ? "" : "s"}`}
                     </div>
                   </div>
-
-                  <ul className="space-y-2">
-                    {tier.dataPoints.map((point) => (
-                      <li
-                        key={point}
-                        className="flex items-start gap-2 text-sm text-text-secondary"
-                      >
-                        <span className="text-text-primary mt-0.5">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              );
-            })}
-          </div>
 
-          <p className="text-center text-sm text-text-muted mt-8 max-w-2xl mx-auto">
-            Our AI agent determines exact credits per lead by analyzing your
-            requirements and data complexity.
-          </p>
+                {/* Buy Button */}
+                <button
+                  className="w-full py-3 px-4 bg-cta text-white rounded-lg font-semibold text-sm hover:bg-cta-hover transition-colors shadow-sm hover:shadow-md"
+                  onClick={() => {
+                    window.location.href = "/upload";
+                  }}
+                >
+                  Start Free (500 rows included)
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </section>
+
+      {/* Cost Breakdown Section */}
+      <CostBreakdown perCredit={perCredit} />
+    </>
   );
 }

@@ -19,9 +19,8 @@ const painPoints = [
 ];
 
 export function Hero({ ctaVariant = "quote", onCTAClick }: HeroProps) {
-  const ctaText =
-    ctaVariant === "quote" ? "Get Your Quote" : "Try Free 5 Leads";
-  const ctaSubtext = ctaVariant === "quote" ? "" : "See our quality risk-free";
+  const ctaText = "Start Free";
+  const ctaSubtext = "First 500 rows included";
 
   return (
     <section className="min-h-[92vh] bg-background flex flex-col justify-center py-10">
@@ -39,7 +38,7 @@ export function Hero({ ctaVariant = "quote", onCTAClick }: HeroProps) {
           </p>
 
           {/* CTAs */}
-          <div className="flex items-center justify-center mb-6">
+          <div className="flex flex-col items-center justify-center mb-6">
             <Button
               size="lg"
               onClick={onCTAClick}
@@ -48,12 +47,12 @@ export function Hero({ ctaVariant = "quote", onCTAClick }: HeroProps) {
               {ctaText}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </div>
 
-          {/* Value Prop */}
-          {ctaSubtext && (
-            <p className="text-sm text-text-muted">{ctaSubtext}</p>
-          )}
+            {/* Value Prop */}
+            {ctaSubtext && (
+              <span className="text-sm text-text-muted mt-2">{ctaSubtext}</span>
+            )}
+          </div>
         </div>
       </div>
 

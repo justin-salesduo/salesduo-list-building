@@ -44,6 +44,16 @@ const scenarios = [
         source: "Clearbit",
       },
       { field: "Location", example: "San Francisco, CA", source: "Apollo" },
+      {
+        field: "Is Company B2B?",
+        example: "Yes",
+        source: "AI Analysis",
+      },
+      {
+        field: "Has Enterprise Plan?",
+        example: "No",
+        source: "AI Analysis",
+      },
     ],
   },
   {
@@ -79,6 +89,16 @@ const scenarios = [
       },
       { field: "Industry", example: "SaaS", source: "Clearbit" },
       { field: "Location", example: "Austin, TX", source: "Apollo" },
+      {
+        field: "Mentioned 'expansion' in news?",
+        example: "Yes",
+        source: "AI Analysis",
+      },
+      {
+        field: "Plans international growth?",
+        example: "Yes - EMEA mentioned",
+        source: "AI Analysis",
+      },
     ],
   },
   {
@@ -107,6 +127,16 @@ const scenarios = [
       { field: "Company Size", example: "15-25 employees", source: "LinkedIn" },
       { field: "Industry", example: "AI/ML SaaS", source: "Crunchbase" },
       { field: "Location", example: "New York, NY", source: "Crunchbase" },
+      {
+        field: "Mentioned 'AI' in annual report?",
+        example: "Yes - 47 mentions",
+        source: "AI Analysis",
+      },
+      {
+        field: "Revenue model is subscription?",
+        example: "Yes",
+        source: "AI Analysis",
+      },
     ],
   },
   {
@@ -150,6 +180,16 @@ const scenarios = [
       { field: "Estimated Revenue", example: "$10M-$25M", source: "ZoomInfo" },
       { field: "Industry", example: "E-commerce / Retail", source: "Clearbit" },
       { field: "Location", example: "Los Angeles, CA", source: "Apollo" },
+      {
+        field: "Sells primarily D2C?",
+        example: "Yes",
+        source: "AI Analysis",
+      },
+      {
+        field: "Has subscription products?",
+        example: "Yes - recurring revenue model",
+        source: "AI Analysis",
+      },
     ],
   },
   {
@@ -207,6 +247,16 @@ const scenarios = [
         source: "SEC EDGAR",
       },
       { field: "Location", example: "Chicago, IL", source: "SEC EDGAR" },
+      {
+        field: "Mentioned 'employee engagement' in report?",
+        example: "Yes - 12 mentions",
+        source: "AI Analysis",
+      },
+      {
+        field: "Has remote work policy?",
+        example: "Yes - hybrid model mentioned",
+        source: "AI Analysis",
+      },
     ],
   },
 ];

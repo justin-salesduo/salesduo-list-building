@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import type { CTAVariant } from './hero';
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import type { CTAVariant } from "./hero";
 
 interface FinalCTAProps {
   ctaVariant?: CTAVariant;
   onCTAClick?: () => void;
 }
 
-export function FinalCTA({ ctaVariant = 'quote', onCTAClick }: FinalCTAProps) {
-  const ctaText = ctaVariant === 'quote' ? 'Get Your Quote' : 'Try Free 5 Leads';
+export function FinalCTA({ ctaVariant = "quote", onCTAClick }: FinalCTAProps) {
+  const ctaText = "Start Free";
 
   return (
     <section className="pt-8 pb-20 bg-background">
@@ -20,8 +20,7 @@ export function FinalCTA({ ctaVariant = 'quote', onCTAClick }: FinalCTAProps) {
             Ready to Build Your Perfect Lead List?
           </h2>
           <p className="text-xl text-text-secondary mb-8 max-w-xl mx-auto">
-            No sales calls. No complicated forms. Just upload your video and get
-            started in minutes.
+            No sales calls. Done in minutes.
           </p>
 
           <div className="flex items-center justify-center">
@@ -36,7 +35,7 @@ export function FinalCTA({ ctaVariant = 'quote', onCTAClick }: FinalCTAProps) {
           </div>
 
           <p className="mt-6 text-sm text-text-muted">
-            24-48 hours delivery • 100% self-served
+            First 500 rows included • 24-48 hours delivery
           </p>
         </div>
       </div>
