@@ -73,7 +73,7 @@ export function CookieConsentBanner() {
         <div className="flex items-center gap-2 ml-4 shrink-0">
           <Button
             onClick={handleReject}
-            variant="outline"
+            variant="secondary"
             size="sm"
             className="h-7 text-xs px-3"
           >
